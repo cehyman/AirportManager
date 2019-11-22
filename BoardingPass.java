@@ -19,9 +19,9 @@ public class BoardingPass {
     @Override
     public String toString() {
         return "BOARDING PASS FOR FLIGHT 18000 WITH " + airline + "\n" +
-                "PASSENGER FIRST NAME : " + passenger.firstName.toUpperCase() + "\n" +
-                "PASSENGER LAST NAME : " + passenger.lastName.toUpperCase() + "\n" +
-                "PASSENGER AGE : " + passenger.age + "\n" +
+                "PASSENGER FIRST NAME : " + passenger.getFirstName().toUpperCase() + "\n" +
+                "PASSENGER LAST NAME : " + passenger.getLastName().toUpperCase() + "\n" +
+                "PASSENGER AGE : " + passenger.getAge() + "\n" +
                 "You can now begin boarding at gate " + gate;
     }
 }
