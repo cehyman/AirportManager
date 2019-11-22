@@ -9,7 +9,7 @@ public class Delta implements Airline {
     private final int maxSeats = 100;
     private int currentSeats = 0;
     private Passenger[] passengers = new Passenger[maxSeats];
-    private Gate gate = new Gate();
+    private Gate gate;
 
     public Delta() {
 
