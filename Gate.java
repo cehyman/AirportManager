@@ -1,7 +1,7 @@
 /**
  * Gate.java
  *
- * @author Duy Bui, G20
+ * @author Duy Bui, Christopher Hyman, G20
  * @version 11/22/2019
  */
 
