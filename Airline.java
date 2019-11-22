@@ -11,6 +11,6 @@ import java.io.Serializable;
 public interface Airline extends Serializable {
     int getCurrentSeats();
     int getMaxSeats();
-    void printPassengerList();
+    String[] printPassengerList();
     void addPassenger();
 }
