@@ -34,7 +34,7 @@ public class Delta implements Airline {
     }
 
     @Override
-    public void addPassenger(Passenger passenger) {
+    public synchronized void addPassenger(Passenger passenger) {
         passengers[currentSeats] = passenger;
         currentSeats++;
     }
