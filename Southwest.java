@@ -37,7 +37,9 @@ public class Southwest implements Airline {
     public synchronized void addPassenger(Passenger passenger) {
         passengers[currentSeats] = passenger;
         currentSeats++;
+        if (currentSeats == 1) gate = new Gate();
     }
+
 
     @Override
     public String getText() {
