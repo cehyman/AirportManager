@@ -12,5 +12,5 @@ public interface Airline extends Serializable {
     int getCurrentSeats();
     int getMaxSeats();
     String[] printPassengerList();
-    void addPassenger();
+    void addPassenger(Passenger passenger);
 }
