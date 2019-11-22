@@ -1,54 +1,89 @@
-import java.net.ServerSocket;
-import java.util.Set;
-import java.io.File;
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.util.HashSet;
-import java.io.FileReader;
-import java.util.Objects;
+import javax.swing.*;
+import java.io.*;
 import java.net.Socket;
 
 /**
- * ReservationServer.java
+ * ReservationClient.java
  *
- * The reservation server
+ * The reservation client
  *
  * @author Duy Bui, Christopher Hyman, G20
  * @version 11/22/2019
  */
 
-public final class ReservationServer {
-    private ServerSocket serverSocket;
-    public ReservationServer(File file) throws IOException { //this will do all of the booking and everything
-        BufferedReader reader;
+public class ReservationClient {
+    static BufferedReader uInputReader = new BufferedReader(new InputStreamReader(System.in));
+    static String localHost;
+    static String portString;
+    static int port;
+    static Socket socket;
+    static BufferedReader socketReader = null;
+    static BufferedWriter socketWriter = null;
 
-        Objects.requireNonNull(file, "the specified file is null");
-        reader = new BufferedReader(new FileReader(file));
-
-        this.serverSocket = new ServerSocket(1234);
-
-    }
-    public void serveClients() {
-        Socket clientSocket;
-        Thread handlerThread;
-        int clientCount = 0;
-
-        System.out.printf("<Now serving clients on port %d...>%n", this.serverSocket.getLocalPort());
-
-        while (true) {
+    public static void main(String[] args) {
+        try{
+            localHost();
+        }catch(IOException e) {
+            e.printStackTrace();
+        } finally {
             try {
-                clientSocket = this.serverSocket.accept();
+                uInputReader.close();
+                if (socketWriter != null) {
+                    socketWriter.close();
+                }
+                if (socketReader != null) {
+                    socketReader.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
-
-                return;
             }
-
-
-            System.out.printf("<Client %d connected...>%n", clientCount);
-
-            clientCount++;
         }
     }
 
+    private static boolean isParsable(String string) {
+        return string.chars()
+                .mapToObj(Character::isDigit)
+                .reduce(Boolean::logicalAnd)
+                .orElse(Boolean.FALSE);
+    }
+
+    public static void localHost() throws IOException {
+        localHost = JOptionPane.showInputDialog(null, "What is the hostname you'd like to connect to?", null, JOptionPane.QUESTION_MESSAGE);
+        if (localHost == null) {
+            invalidInput();//isnt running this for some reason
+            localHost();
+        } else {
+            port();
+        }
+    }
+
+    public static void port() throws IOException {
+        portString = JOptionPane.showInputDialog(null, "What is the port you'd like to connect to?", null, JOptionPane.QUESTION_MESSAGE);
+        if (portString == null){
+            invalidInput();
+            port();
+        } else if (!isParsable(portString)){
+            invalidInput();
+            port();
+        } else {
+            System.out.println("got here");
+            port = Integer.parseInt(portString);
+            socket = new Socket(localHost, port);
+            socketWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            socketReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+        }
+        chooseAirline();
+    }
+
+    public static void chooseAirline() {
+
+
+
+    }
+
+    public static void invalidInput() {
+        JOptionPane.showMessageDialog(null, "Please produce a valid input!", null, JOptionPane.ERROR_MESSAGE);
+    }
 }
+
